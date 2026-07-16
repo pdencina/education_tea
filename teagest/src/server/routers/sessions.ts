@@ -95,11 +95,12 @@ export const sessionsRouter = createTRPCRouter({
           startTime: input.startTime,
           endTime: input.endTime,
           type: input.type,
-          activities: input.activities || null,
+          activities: input.activities ? [input.activities] : [],
           behaviors: input.behaviors,
           mood: input.mood,
           participation: input.participation,
           notes: input.notes,
+          evidence: [],
         },
       });
     }),

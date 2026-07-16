@@ -160,7 +160,7 @@ export default function SesionesPage() {
                           <p className="text-sm text-gray-600 mt-2 line-clamp-2">{session.notes}</p>
                         )}
                         {session.activities && (
-                          <p className="text-xs text-gray-400 mt-1">Actividades: {session.activities}</p>
+                          <p className="text-xs text-gray-400 mt-1">Actividades: {Array.isArray(session.activities) ? session.activities.join(", ") : session.activities}</p>
                         )}
                       </div>
                     </div>

@@ -83,7 +83,7 @@ export function TabSessions({ studentId }: { studentId: string }) {
                     <p className="text-sm text-gray-700 mt-2">{session.notes}</p>
                   )}
                   {session.activities && (
-                    <p className="text-xs text-gray-400 mt-1">Actividades: {session.activities}</p>
+                    <p className="text-xs text-gray-400 mt-1">Actividades: {Array.isArray(session.activities) ? session.activities.join(", ") : session.activities}</p>
                   )}
                 </div>
               </div>
