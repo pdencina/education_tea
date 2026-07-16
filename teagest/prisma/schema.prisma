@@ -1,0 +1,353 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ==================== MULTI-TENANCY ====================
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  logo      String?
+  address   String?
+  phone     String?
+  email     String?
+  plan      String   @default("basic")
+  config    Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    User[]
+  students Student[]
+  groups   Group[]
+  periods  Period[]
+  devAreas DevArea[]
+
+  @@map("tenants")
+}
+
+// ==================== AUTH & USERS ====================
+
+enum Role {
+  ADMIN
+  COORDINATOR
+  TEACHER
+  SPECIALIST
+  FAMILY
+}
+
+model User {
+  id           String   @id @default(cuid())
+  tenantId     String
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(TEACHER)
+  avatar       String?
+  specialty    String?
+  license      String?
+  phone        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  assignments  Assignment[]
+  familyLinks  FamilyLink[]
+  sessions     Session[]
+  progress     Progress[]
+  messages     Message[]
+  dailyReports DailyReport[]
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+// ==================== STUDENTS ====================
+
+enum SupportLevel {
+  LEVEL_1
+  LEVEL_2
+  LEVEL_3
+}
+
+enum StudentStatus {
+  ACTIVE
+  GRADUATED
+  TEMPORARY_LEAVE
+  WITHDRAWN
+}
+
+model Student {
+  id           String        @id @default(cuid())
+  tenantId     String
+  code         String
+  firstName    String
+  lastName     String
+  birthDate    DateTime
+  photo        String?
+  diagnosis    String?
+  supportLevel SupportLevel  @default(LEVEL_1)
+  entryDate    DateTime      @default(now())
+  status       StudentStatus @default(ACTIVE)
+  groupId      String?
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  tenant       Tenant       @relation(fields: [tenantId], references: [id])
+  group        Group?       @relation(fields: [groupId], references: [id])
+  assignments  Assignment[]
+  familyLinks  FamilyLink[]
+  peis         PEI[]
+  sessions     Session[]
+  messages     Message[]
+  dailyReports DailyReport[]
+  documents    Document[]
+
+  @@unique([tenantId, code])
+  @@index([tenantId])
+  @@index([groupId])
+  @@map("students")
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  studentId String
+  name      String
+  url       String
+  type      String
+  createdAt DateTime @default(now())
+
+  student Student @relation(fields: [studentId], references: [id])
+
+  @@map("documents")
+}
+
+// ==================== GROUPS & PERIODS ====================
+
+model Group {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  capacity  Int      @default(8)
+  teacherId String?
+  level     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant   Tenant    @relation(fields: [tenantId], references: [id])
+  students Student[]
+
+  @@index([tenantId])
+  @@map("groups")
+}
+
+model Period {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  peis   PEI[]
+
+  @@index([tenantId])
+  @@map("periods")
+}
+
+// ==================== ASSIGNMENTS ====================
+
+model Assignment {
+  id         String   @id @default(cuid())
+  userId     String
+  studentId  String
+  assignedAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
+
+  @@unique([userId, studentId])
+  @@map("assignments")
+}
+
+model FamilyLink {
+  id           String @id @default(cuid())
+  userId       String
+  studentId    String
+  relationship String
+
+  user    User    @relation(fields: [userId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
+
+  @@unique([userId, studentId])
+  @@map("family_links")
+}
+
+// ==================== PEI ====================
+
+model DevArea {
+  id          String  @id @default(cuid())
+  tenantId    String
+  name        String
+  description String?
+  icon        String?
+  order       Int     @default(0)
+
+  tenant     Tenant         @relation(fields: [tenantId], references: [id])
+  objectives PEIObjective[]
+
+  @@index([tenantId])
+  @@map("dev_areas")
+}
+
+enum PEIStatus {
+  ACTIVE
+  IN_REVIEW
+  CLOSED
+}
+
+model PEI {
+  id         String    @id @default(cuid())
+  studentId  String
+  periodId   String
+  startDate  DateTime
+  reviewDate DateTime?
+  status     PEIStatus @default(ACTIVE)
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  student    Student        @relation(fields: [studentId], references: [id])
+  period     Period         @relation(fields: [periodId], references: [id])
+  objectives PEIObjective[]
+
+  @@index([studentId])
+  @@map("peis")
+}
+
+enum ObjectiveStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  ACHIEVED_WITH_SUPPORT
+  ACHIEVED_INDEPENDENT
+}
+
+model PEIObjective {
+  id            String          @id @default(cuid())
+  peiId         String
+  areaId        String
+  description   String
+  targetLevel   ObjectiveStatus @default(NOT_STARTED)
+  currentStatus ObjectiveStatus @default(NOT_STARTED)
+  targetDate    DateTime?
+  responsibleId String?
+  order         Int             @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  pei      PEI        @relation(fields: [peiId], references: [id], onDelete: Cascade)
+  area     DevArea    @relation(fields: [areaId], references: [id])
+  progress Progress[]
+
+  @@index([peiId])
+  @@map("pei_objectives")
+}
+
+model Progress {
+  id             String          @id @default(cuid())
+  objectiveId    String
+  date           DateTime        @default(now())
+  levelAchieved  ObjectiveStatus
+  notes          String?
+  evidence       String[]
+  registeredById String
+
+  objective    PEIObjective @relation(fields: [objectiveId], references: [id], onDelete: Cascade)
+  registeredBy User         @relation(fields: [registeredById], references: [id])
+
+  @@index([objectiveId])
+  @@map("progress")
+}
+
+// ==================== SESSIONS ====================
+
+enum SessionType {
+  INDIVIDUAL
+  GROUP
+  OCCUPATIONAL_THERAPY
+  SPEECH_THERAPY
+  PSYCHOLOGY
+  OTHER
+}
+
+model Session {
+  id            String      @id @default(cuid())
+  studentId     String
+  userId        String
+  date          DateTime
+  startTime     String
+  endTime       String?
+  type          SessionType @default(INDIVIDUAL)
+  activities    String[]
+  behaviors     String?
+  mood          String?
+  participation String?
+  notes         String?
+  evidence      String[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@index([studentId])
+  @@index([userId])
+  @@index([date])
+  @@map("sessions")
+}
+
+// ==================== COMMUNICATION ====================
+
+model Message {
+  id        String   @id @default(cuid())
+  studentId String
+  senderId  String
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  student Student @relation(fields: [studentId], references: [id])
+  sender  User    @relation(fields: [senderId], references: [id])
+
+  @@index([studentId])
+  @@map("messages")
+}
+
+model DailyReport {
+  id            String    @id @default(cuid())
+  studentId     String
+  sentById      String
+  date          DateTime  @default(now())
+  feeding       String?
+  rest          String?
+  mood          String?
+  participation String?
+  highlights    String?
+  sentAt        DateTime?
+  createdAt     DateTime  @default(now())
+
+  student Student @relation(fields: [studentId], references: [id])
+  sentBy  User    @relation(fields: [sentById], references: [id])
+
+  @@index([studentId])
+  @@map("daily_reports")
+}
