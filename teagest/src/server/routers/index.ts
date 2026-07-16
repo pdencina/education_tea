@@ -5,6 +5,7 @@ import { peiRouter } from "./pei";
 import { devAreasRouter } from "./dev-areas";
 import { periodsRouter } from "./periods";
 import { sessionsRouter } from "./sessions";
+import { communicationRouter } from "./communication";
 
 export const appRouter = createTRPCRouter({
   students: studentsRouter,
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   devAreas: devAreasRouter,
   periods: periodsRouter,
   sessions: sessionsRouter,
+  communication: communicationRouter,
 });
 
 export type AppRouter = typeof appRouter;
