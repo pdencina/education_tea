@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 const navigation = [
-  { name: "Dashboard", href: "/alumnos", icon: LayoutDashboard },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Alumnos", href: "/alumnos", icon: Users },
   { name: "Plan Educativo (PEI)", href: "/pei", icon: ClipboardList },
   { name: "Sesiones", href: "/sesiones", icon: Calendar },
