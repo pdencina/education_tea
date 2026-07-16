@@ -30,11 +30,11 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
+    <aside className="w-64 bg-white border-r border-gray-100 flex flex-col h-screen sticky top-0 shadow-sm">
       {/* Logo */}
-      <div className="p-5 border-b border-gray-100">
+      <div className="p-5 border-b border-gray-50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-tea-pink rounded-xl flex items-center justify-center shadow-md shadow-primary-200">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -50,8 +50,10 @@ export function Sidebar() {
             </svg>
           </div>
           <div>
-            <h1 className="text-lg font-bold text-gray-800">TEAGest</h1>
-            <p className="text-xs text-gray-500">Centro Arcoíris</p>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-primary-600 to-tea-pink bg-clip-text text-transparent">
+              TEAGest
+            </h1>
+            <p className="text-xs text-gray-400">Centro Educativo</p>
           </div>
         </div>
       </div>
@@ -59,19 +61,19 @@ export function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         {navigation.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           return (
             <Link
               key={item.name}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
                 isActive
-                  ? "bg-blue-50 text-blue-700 font-medium"
-                  : "text-gray-600 hover:bg-gray-100"
+                  ? "bg-gradient-to-r from-primary-50 to-pastel-pink text-primary-700 font-medium shadow-sm"
+                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               )}
             >
-              <item.icon className="w-5 h-5" />
+              <item.icon className={cn("w-[18px] h-[18px]", isActive && "text-primary-500")} />
               {item.name}
             </Link>
           );
@@ -79,27 +81,32 @@ export function Sidebar() {
       </nav>
 
       {/* Settings */}
-      <div className="p-3 border-t border-gray-100">
+      <div className="p-3 border-t border-gray-50">
         <Link
           href="/configuracion"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
+            pathname === "/configuracion"
+              ? "bg-gradient-to-r from-primary-50 to-pastel-pink text-primary-700 font-medium"
+              : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+          )}
         >
-          <Settings className="w-5 h-5" />
+          <Settings className="w-[18px] h-[18px]" />
           Configuración
         </Link>
       </div>
 
       {/* User */}
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t border-gray-50 bg-gradient-to-r from-pastel-lavender/50 to-transparent">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center">
-            <span className="text-sm font-medium text-blue-700">MR</span>
+          <div className="w-9 h-9 bg-gradient-to-br from-primary-400 to-tea-pink rounded-full flex items-center justify-center shadow-sm">
+            <span className="text-xs font-semibold text-white">MR</span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-700 truncate">
               María Rodríguez
             </p>
-            <p className="text-xs text-gray-500">Coordinadora</p>
+            <p className="text-xs text-gray-400">Coordinadora</p>
           </div>
         </div>
       </div>
