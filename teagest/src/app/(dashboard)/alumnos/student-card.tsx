@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 type StudentWithRelations = {
   id: string;
   code: string;
@@ -59,7 +61,7 @@ export function StudentCard({ student }: { student: StudentWithRelations }) {
   const avatarColor = getColorFromName(student.firstName + student.lastName);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition cursor-pointer group">
+    <Link href={`/alumnos/${student.id}`} className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition cursor-pointer group block">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div
@@ -122,6 +124,6 @@ export function StudentCard({ student }: { student: StudentWithRelations }) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </div>
-    </div>
+    </Link>
   );
 }
