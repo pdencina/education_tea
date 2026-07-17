@@ -351,3 +351,21 @@ model DailyReport {
   @@index([studentId])
   @@map("daily_reports")
 }
+
+// ==================== VISUAL SCHEDULES ====================
+
+model VisualSchedule {
+  id          String   @id @default(cuid())
+  tenantId    String
+  title       String
+  studentId   String?
+  groupId     String?
+  items       Json     @default("[]") // Array of { id, pictogramId, pictogramUrl, label, order }
+  isTemplate  Boolean  @default(false)
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([tenantId])
+  @@map("visual_schedules")
+}
