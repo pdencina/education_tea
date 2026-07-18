@@ -17,6 +17,7 @@ import { familyPortalRouter } from "./family-portal";
 import { clinicalHistoryRouter } from "./clinical-history";
 import { attendanceRouter } from "./attendance";
 import { billingRouter } from "./billing";
+import { remindersRouter } from "./reminders";
 
 export const appRouter = createTRPCRouter({
   students: studentsRouter,
@@ -37,6 +38,7 @@ export const appRouter = createTRPCRouter({
   clinicalHistory: clinicalHistoryRouter,
   attendance: attendanceRouter,
   billing: billingRouter,
+  reminders: remindersRouter,
 });
 
 export type AppRouter = typeof appRouter;

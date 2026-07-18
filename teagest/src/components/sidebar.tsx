@@ -19,6 +19,7 @@ import {
   Stethoscope,
   CheckSquare,
   Receipt,
+  Bell,
 } from "lucide-react";
 
 const navigation = [
@@ -33,6 +34,7 @@ const navigation = [
   { name: "Sesiones", href: "/sesiones", icon: Calendar },
   { name: "Comunicación", href: "/comunicacion", icon: MessageSquare },
   { name: "Facturación", href: "/facturacion", icon: Receipt },
+  { name: "Recordatorios", href: "/recordatorios", icon: Bell },
   { name: "Equipo", href: "/equipo", icon: UserCircle },
   { name: "Reportes", href: "/reportes", icon: BarChart3 },
 ];

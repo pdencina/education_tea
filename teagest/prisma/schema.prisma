@@ -602,3 +602,50 @@ model Payment {
   @@index([invoiceId])
   @@map("payments")
 }
+
+// ==================== REMINDERS / NOTIFICATIONS ====================
+
+enum ReminderChannel {
+  WHATSAPP
+  EMAIL
+  BOTH
+}
+
+enum ReminderType {
+  APPOINTMENT_24H
+  APPOINTMENT_1H
+  PAYMENT_DUE
+  PAYMENT_OVERDUE
+  WELCOME
+  CUSTOM
+}
+
+model ReminderConfig {
+  id        String          @id @default(cuid())
+  tenantId  String
+  type      ReminderType
+  channel   ReminderChannel @default(BOTH)
+  isActive  Boolean         @default(true)
+  template  String          // Message template with {{variables}}
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@unique([tenantId, type])
+  @@map("reminder_configs")
+}
+
+model ReminderLog {
+  id          String   @id @default(cuid())
+  tenantId    String
+  type        ReminderType
+  channel     String   // "whatsapp" or "email"
+  recipient   String   // Phone or email
+  studentName String?
+  message     String
+  status      String   @default("sent") // sent, failed, pending
+  error       String?
+  sentAt      DateTime @default(now())
+
+  @@index([tenantId, sentAt(sort: Desc)])
+  @@map("reminder_logs")
+}
