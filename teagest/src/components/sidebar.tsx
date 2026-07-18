@@ -20,6 +20,7 @@ import {
   CheckSquare,
   Receipt,
   Bell,
+  TrendingUp,
 } from "lucide-react";
 
 const navigation = [
@@ -37,6 +38,7 @@ const navigation = [
   { name: "Recordatorios", href: "/recordatorios", icon: Bell },
   { name: "Equipo", href: "/equipo", icon: UserCircle },
   { name: "Reportes", href: "/reportes", icon: BarChart3 },
+  { name: "Indicadores", href: "/indicadores", icon: TrendingUp },
 ];
 
 export function Sidebar() {

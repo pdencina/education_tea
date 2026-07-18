@@ -23,6 +23,7 @@ export const config = {
     "/agenda-visual/:path*",
     "/equipo/:path*",
     "/reportes/:path*",
+    "/indicadores/:path*",
     "/configuracion/:path*",
     "/familia/:path*",
   ],
