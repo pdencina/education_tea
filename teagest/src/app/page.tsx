@@ -2,351 +2,267 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-surface-warm">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-0 w-full bg-surface-warm/90 backdrop-blur-md z-50 border-b border-black/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-tea-pink rounded-xl flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <span className="text-lg font-bold bg-gradient-to-r from-primary-600 to-tea-pink bg-clip-text text-transparent">TEAGest</span>
+            <span className="text-[15px] font-bold text-brand-dark">TEAGest</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm text-gray-600">
-            <a href="#features" className="hover:text-primary-600 transition">Funcionalidades</a>
-            <a href="#pricing" className="hover:text-primary-600 transition">Precios</a>
-            <a href="#testimonials" className="hover:text-primary-600 transition">Testimonios</a>
+          <div className="hidden md:flex items-center gap-8 text-[13px] font-medium text-gray-500">
+            <a href="#features" className="hover:text-brand-dark transition">Funcionalidades</a>
+            <a href="#pricing" className="hover:text-brand-dark transition">Precios</a>
+            <a href="#testimonials" className="hover:text-brand-dark transition">Testimonios</a>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/auth/login" className="text-sm text-gray-600 hover:text-primary-600 transition font-medium">Iniciar Sesión</Link>
-            <Link href="/auth/registro" className="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg text-sm font-medium hover:from-primary-600 hover:to-primary-700 transition shadow-md shadow-primary-200/50">
+            <Link href="/auth/login" className="text-[13px] font-medium text-gray-500 hover:text-brand-dark transition">Iniciar Sesión</Link>
+            <Link href="/auth/registro" className="px-4 py-2 bg-brand-dark text-white rounded-lg text-[13px] font-medium hover:bg-brand-medium transition">
               Prueba Gratis
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-pastel-purple rounded-full opacity-30 blur-3xl" />
-        <div className="absolute bottom-0 right-10 w-96 h-96 bg-pastel-teal rounded-full opacity-20 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pastel-pink rounded-full opacity-15 blur-3xl" />
-
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-pastel-purple rounded-full text-xs font-medium text-primary-700 mb-6">
-            <span className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
-            Plataforma para centros educativos TEA
+      {/* Hero - Editorial style */}
+      <section className="pt-28 pb-24 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-100 rounded-full text-[12px] font-semibold text-brand-medium mb-6">
+              Plataforma para educación TEA
+            </div>
+            <h1 className="text-[3.2rem] lg:text-[4rem] font-extrabold text-brand-dark leading-[1.05] tracking-tight mb-6">
+              Donde cada<br />
+              <span className="text-accent">progreso</span><br />
+              cuenta.
+            </h1>
+            <p className="text-[17px] text-gray-500 max-w-md leading-relaxed mb-8">
+              La herramienta que conecta a docentes, terapeutas y familias en torno al desarrollo de cada niño con TEA.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/auth/registro"
+                className="px-6 py-3 bg-accent text-white rounded-lg text-[14px] font-semibold hover:bg-accent-dark transition shadow-lg shadow-accent/20 text-center"
+              >
+                Comenzar Gratis
+              </Link>
+              <a
+                href="#features"
+                className="px-6 py-3 bg-white text-brand-dark rounded-lg text-[14px] font-medium border border-gray-200 hover:border-brand-medium hover:text-brand-medium transition text-center"
+              >
+                Conoce más
+              </a>
+            </div>
+            <p className="text-[12px] text-gray-400 mt-3">14 días gratis. Sin tarjeta.</p>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
-            Gestiona tu centro educativo con{" "}
-            <span className="bg-gradient-to-r from-primary-600 via-tea-pink to-primary-500 bg-clip-text text-transparent">
-              claridad y calidez
-            </span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            La plataforma integral para centros que atienden niños con Trastorno del Espectro Autista.
-            Planes educativos, seguimiento de progreso, comunicación con familias — todo en un solo lugar.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/auth/registro"
-              className="px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium text-base hover:from-primary-600 hover:to-primary-700 transition-all shadow-lg shadow-primary-200/50 hover:shadow-xl hover:shadow-primary-300/50"
-            >
-              Comenzar Gratis — 14 días
-            </Link>
-            <a
-              href="#features"
-              className="px-8 py-4 bg-white border border-gray-200 text-gray-600 rounded-xl font-medium text-base hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
-            >
-              Ver funcionalidades
-            </a>
-          </div>
-          <p className="text-xs text-gray-400 mt-4">Sin tarjeta de crédito. Cancela cuando quieras.</p>
-        </div>
-      </section>
 
-      {/* Social proof */}
-      <section className="py-10 border-y border-gray-100 bg-gray-50/50">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-sm text-gray-400 mb-4">Diseñado para profesionales de la educación especial</p>
-          <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-500">
-            <span className="flex items-center gap-2"><span className="text-lg">🎯</span> Plan Educativo (PEI)</span>
-            <span className="flex items-center gap-2"><span className="text-lg">📊</span> Seguimiento medible</span>
-            <span className="flex items-center gap-2"><span className="text-lg">👨‍👩‍👦</span> Portal familias</span>
-            <span className="flex items-center gap-2"><span className="text-lg">🗣️</span> Pictogramas ARASAAC</span>
-            <span className="flex items-center gap-2"><span className="text-lg">📱</span> Funciona en tablet</span>
+          {/* Hero visual - abstract cards */}
+          <div className="hidden lg:block relative">
+            <div className="bg-white rounded-2xl shadow-elevated p-5 max-w-xs ml-auto transform rotate-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-lg">🎯</div>
+                <div>
+                  <p className="text-[13px] font-semibold text-brand-dark">PEI — Mateo S.</p>
+                  <p className="text-[11px] text-gray-400">8 objetivos · 5 logrados</p>
+                </div>
+              </div>
+              <div className="w-full bg-gray-100 rounded-full h-2 mb-1">
+                <div className="bg-brand-light h-2 rounded-full" style={{ width: "62%" }} />
+              </div>
+              <p className="text-[11px] text-brand-medium font-medium text-right">62%</p>
+            </div>
+            <div className="bg-brand-dark rounded-2xl shadow-elevated p-5 max-w-[240px] ml-12 -mt-4 transform -rotate-2">
+              <p className="text-[12px] text-white/60 mb-1">Sesiones esta semana</p>
+              <p className="text-3xl font-bold text-white">24</p>
+              <div className="flex gap-1 mt-2">
+                {[40, 65, 80, 55, 90, 70, 45].map((h, i) => (
+                  <div key={i} className="flex-1 bg-white/20 rounded-sm overflow-hidden h-8">
+                    <div className="bg-accent w-full rounded-sm" style={{ height: `${h}%`, marginTop: `${100-h}%` }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-4 max-w-[200px] ml-auto -mt-2 transform rotate-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">😊</span>
+                <div>
+                  <p className="text-[12px] font-medium text-brand-dark">Valentina hoy</p>
+                  <p className="text-[10px] text-gray-400">Participación alta</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section id="features" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Todo lo que tu centro necesita</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Reemplaza las hojas de Excel, los grupos de WhatsApp y los archivos en papel por una plataforma profesional</p>
+      <section id="features" className="py-24 px-6 lg:px-12 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-xl mb-16">
+            <h2 className="text-3xl font-bold text-brand-dark mb-3">Todo integrado.</h2>
+            <p className="text-gray-500 text-[15px] leading-relaxed">
+              Sin Excel, sin WhatsApp, sin papel. Una plataforma que tu equipo realmente va a usar todos los días.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <FeatureCard
-              icon="📋"
-              color="bg-pastel-purple"
-              title="Plan Educativo (PEI)"
-              description="Crea planes individualizados con objetivos por área de desarrollo. Registra progreso con un clic y visualiza la evolución."
-            />
-            <FeatureCard
-              icon="📅"
-              color="bg-pastel-teal"
-              title="Registro de Sesiones"
-              description="Documenta cada sesión: actividades, conductas, estado emocional y participación. Historial completo por alumno."
-            />
-            <FeatureCard
-              icon="💬"
-              color="bg-pastel-pink"
-              title="Comunicación con Familias"
-              description="Chat por alumno visible para todo el equipo. Reportes diarios con emojis que las familias entienden al instante."
-            />
-            <FeatureCard
-              icon="🖼️"
-              color="bg-pastel-yellow"
-              title="Agenda Visual"
-              description="Crea secuencias con pictogramas ARASAAC para anticipar actividades. Búsqueda integrada en español."
-            />
-            <FeatureCard
-              icon="👥"
-              color="bg-pastel-blue"
-              title="Equipo Multidisciplinario"
-              description="Gestiona docentes, terapeutas y especialistas. Asigna profesionales a alumnos y visualiza la carga de trabajo."
-            />
-            <FeatureCard
-              icon="📊"
-              color="bg-pastel-green"
-              title="Reportes e Indicadores"
-              description="Dashboard con KPIs del centro. Genera reportes PDF de progreso por alumno para entregar a familias o autoridades."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="py-20 px-6 bg-gradient-to-b from-white to-pastel-lavender/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12">Empieza en 3 minutos</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <StepCard number="1" title="Registra tu centro" description="Crea tu cuenta, nombra tu centro y configura los grupos y áreas de desarrollo." />
-            <StepCard number="2" title="Agrega alumnos y equipo" description="Registra a tus alumnos con su diagnóstico y nivel de apoyo. Invita a tu equipo profesional." />
-            <StepCard number="3" title="Comienza a documentar" description="Crea PEIs, registra sesiones, envía reportes a familias. Todo queda medido y organizado." />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Feature icon="📋" title="Plan Educativo (PEI)" desc="Objetivos individualizados por área. Registra progreso con un clic. Visualiza la evolución con gráficos claros." />
+            <Feature icon="📅" title="Registro de Sesiones" desc="Documenta actividades, conductas, estado emocional y participación. Todo queda vinculado al expediente." />
+            <Feature icon="💬" title="Comunicación" desc="Chat por alumno visible para el equipo completo. Reportes diarios visuales para familias." />
+            <Feature icon="🖼️" title="Agenda Visual" desc="Pictogramas ARASAAC integrados. Crea secuencias para anticipar actividades con búsqueda en español." />
+            <Feature icon="👥" title="Equipo" desc="Gestiona docentes, terapeutas y especialistas. Visualiza carga de trabajo y asignaciones." />
+            <Feature icon="📊" title="Reportes" desc="KPIs del centro en tiempo real. Genera reportes PDF de progreso para entregar a familias o autoridades." />
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 px-6">
+      <section id="pricing" className="py-24 px-6 lg:px-12">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Planes simples y transparentes</h2>
-            <p className="text-gray-500">Elige el plan que se adapta a tu centro. Todos incluyen 14 días de prueba gratis.</p>
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold text-brand-dark mb-3">Precio justo, sin sorpresas.</h2>
+            <p className="text-gray-500 text-[15px]">14 días gratis en todos los planes. Cancela cuando quieras.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Basic */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex flex-col">
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-800">Básico</h3>
-                <p className="text-sm text-gray-400 mt-1">Para centros pequeños</p>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold text-gray-900">$29</span>
-                  <span className="text-gray-400 text-sm"> USD/mes</span>
-                </div>
-              </div>
-              <ul className="space-y-3 text-sm text-gray-600 flex-1">
-                <PricingItem text="Hasta 10 alumnos" />
-                <PricingItem text="1 grupo" />
-                <PricingItem text="3 usuarios (equipo)" />
-                <PricingItem text="PEI y seguimiento" />
-                <PricingItem text="Registro de sesiones" />
-                <PricingItem text="Comunicación con familias" />
-              </ul>
-              <Link href="/auth/registro" className="mt-6 w-full py-3 border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 transition text-center block">
-                Comenzar Gratis
-              </Link>
-            </div>
-
-            {/* Professional - Highlighted */}
-            <div className="bg-gradient-to-b from-primary-500 to-primary-600 rounded-2xl p-6 shadow-xl shadow-primary-200/50 flex flex-col relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-tea-yellow text-yellow-900 rounded-full text-xs font-semibold">
-                Más popular
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-white">Profesional</h3>
-                <p className="text-sm text-primary-200 mt-1">Para centros en crecimiento</p>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold text-white">$79</span>
-                  <span className="text-primary-200 text-sm"> USD/mes</span>
-                </div>
-              </div>
-              <ul className="space-y-3 text-sm text-primary-100 flex-1">
-                <PricingItem text="Hasta 30 alumnos" light />
-                <PricingItem text="3 grupos" light />
-                <PricingItem text="10 usuarios (equipo)" light />
-                <PricingItem text="Todo del plan Básico" light />
-                <PricingItem text="Agenda Visual (ARASAAC)" light />
-                <PricingItem text="Reportes PDF" light />
-                <PricingItem text="Dashboard avanzado" light />
-              </ul>
-              <Link href="/auth/registro" className="mt-6 w-full py-3 bg-white text-primary-600 rounded-xl text-sm font-semibold hover:bg-primary-50 transition text-center block">
-                Comenzar Gratis
-              </Link>
-            </div>
-
-            {/* Premium */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex flex-col">
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-800">Premium</h3>
-                <p className="text-sm text-gray-400 mt-1">Para centros grandes</p>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold text-gray-900">$149</span>
-                  <span className="text-gray-400 text-sm"> USD/mes</span>
-                </div>
-              </div>
-              <ul className="space-y-3 text-sm text-gray-600 flex-1">
-                <PricingItem text="Alumnos ilimitados" />
-                <PricingItem text="Grupos ilimitados" />
-                <PricingItem text="Usuarios ilimitados" />
-                <PricingItem text="Todo del plan Profesional" />
-                <PricingItem text="Soporte prioritario" />
-                <PricingItem text="Personalización de marca" />
-                <PricingItem text="API de integración" />
-              </ul>
-              <Link href="/auth/registro" className="mt-6 w-full py-3 border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-50 transition text-center block">
-                Comenzar Gratis
-              </Link>
-            </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            <PlanCard
+              name="Básico"
+              price="29"
+              desc="Para centros que inician"
+              features={["10 alumnos", "1 grupo", "3 profesionales", "PEI y sesiones", "Comunicación"]}
+              highlighted={false}
+            />
+            <PlanCard
+              name="Profesional"
+              price="79"
+              desc="Para centros en crecimiento"
+              features={["30 alumnos", "3 grupos", "10 profesionales", "Todo del Básico", "Agenda Visual", "Reportes PDF", "Dashboard avanzado"]}
+              highlighted={true}
+            />
+            <PlanCard
+              name="Premium"
+              price="149"
+              desc="Para redes de centros"
+              features={["Alumnos ilimitados", "Grupos ilimitados", "Usuarios ilimitados", "Todo del Profesional", "Soporte prioritario", "API de integración"]}
+              highlighted={false}
+            />
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-20 px-6 bg-gradient-to-b from-pastel-lavender/20 to-white">
+      <section id="testimonials" className="py-24 px-6 lg:px-12 bg-brand-dark">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Lo que dicen los profesionales</h2>
-          </div>
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">Lo que dicen quienes lo usan.</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <TestimonialCard
-              quote="Por fin puedo mostrarle a las familias el progreso real de sus hijos con gráficos claros. Antes era todo en papel y se perdía."
-              name="Ana García"
-              role="Docente de Educación Especial"
-            />
-            <TestimonialCard
-              quote="La agenda visual con pictogramas nos ahorró horas de trabajo. Los niños responden mejor cuando anticipan las actividades."
-              name="Carlos Méndez"
-              role="Terapeuta Ocupacional"
-            />
-            <TestimonialCard
-              quote="Como madre, al fin entiendo qué está pasando en el centro. Los reportes diarios me dan tranquilidad."
-              name="Laura Torres"
-              role="Madre de alumno TEA"
-            />
+            <Quote text="Por fin puedo mostrarle a las familias el progreso real con gráficos claros. Antes era todo en papel." name="Ana G." role="Docente" />
+            <Quote text="La agenda visual con pictogramas nos ahorró horas. Los niños responden mejor cuando anticipan." name="Carlos M." role="Terapeuta Ocupacional" />
+            <Quote text="Como madre, al fin entiendo qué pasa en el centro. Los reportes diarios me dan paz." name="Laura T." role="Madre de alumno" />
           </div>
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-20 px-6">
-        <div className="max-w-3xl mx-auto text-center bg-gradient-to-br from-primary-500 to-primary-700 rounded-3xl p-12 shadow-xl shadow-primary-200/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-          <div className="relative z-10">
-            <h2 className="text-3xl font-bold text-white mb-4">Transforma la gestión de tu centro hoy</h2>
-            <p className="text-primary-100 mb-8 max-w-lg mx-auto">
-              Únete a los centros que ya dejaron el papel y WhatsApp. Prueba gratis 14 días, sin compromiso.
-            </p>
-            <Link
-              href="/auth/registro"
-              className="inline-block px-8 py-4 bg-white text-primary-600 rounded-xl font-semibold text-base hover:bg-primary-50 transition shadow-lg"
-            >
-              Crear mi Cuenta Gratis
-            </Link>
-          </div>
+      {/* CTA */}
+      <section className="py-20 px-6 lg:px-12">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-brand-dark mb-4">Empieza hoy.</h2>
+          <p className="text-gray-500 text-[15px] mb-8">
+            Tu centro merece una herramienta a la altura del trabajo que hacen. Configúralo en 3 minutos.
+          </p>
+          <Link
+            href="/auth/registro"
+            className="inline-block px-8 py-3.5 bg-accent text-white rounded-lg font-semibold text-[15px] hover:bg-accent-dark transition shadow-lg shadow-accent/20"
+          >
+            Crear mi Cuenta Gratis
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-gray-100">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <footer className="py-8 px-6 lg:px-12 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-tea-pink rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            <div className="w-6 h-6 bg-accent rounded flex items-center justify-center">
+              <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <span className="font-bold text-gray-800">TEAGest</span>
+            <span className="text-[13px] font-bold text-brand-dark">TEAGest</span>
           </div>
-          <div className="flex gap-6 text-sm text-gray-400">
-            <a href="#features" className="hover:text-gray-600 transition">Funcionalidades</a>
-            <a href="#pricing" className="hover:text-gray-600 transition">Precios</a>
-            <a href="mailto:contacto@teagest.com" className="hover:text-gray-600 transition">Contacto</a>
-          </div>
-          <p className="text-xs text-gray-300">© 2026 TEAGest. Todos los derechos reservados.</p>
+          <p className="text-[12px] text-gray-400">© 2026 TEAGest. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
   );
 }
 
-function FeatureCard({ icon, color, title, description }: { icon: string; color: string; title: string; description: string }) {
+function Feature({ icon, title, desc }: { icon: string; title: string; desc: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition group">
-      <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-        <span className="text-xl">{icon}</span>
+    <div className="group">
+      <div className="w-11 h-11 bg-primary-50 rounded-xl flex items-center justify-center mb-3 text-xl group-hover:bg-primary-100 transition">
+        {icon}
       </div>
-      <h3 className="font-semibold text-gray-800 mb-2">{title}</h3>
-      <p className="text-sm text-gray-500 leading-relaxed">{description}</p>
+      <h3 className="font-semibold text-brand-dark text-[15px] mb-1.5">{title}</h3>
+      <p className="text-[13px] text-gray-500 leading-relaxed">{desc}</p>
     </div>
   );
 }
 
-function StepCard({ number, title, description }: { number: string; title: string; description: string }) {
+function PlanCard({ name, price, desc, features, highlighted }: { name: string; price: string; desc: string; features: string[]; highlighted: boolean }) {
   return (
-    <div className="text-center">
-      <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-tea-pink rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-lg shadow-md shadow-primary-200/50">
-        {number}
+    <div className={cn(
+      "rounded-2xl p-6 flex flex-col",
+      highlighted ? "bg-brand-dark text-white ring-2 ring-accent shadow-elevated" : "bg-white border border-gray-200"
+    )}>
+      <div className="mb-5">
+        <h3 className={cn("text-[15px] font-semibold", highlighted ? "text-white" : "text-brand-dark")}>{name}</h3>
+        <p className={cn("text-[12px] mt-0.5", highlighted ? "text-white/60" : "text-gray-400")}>{desc}</p>
+        <div className="mt-3">
+          <span className={cn("text-3xl font-bold", highlighted ? "text-white" : "text-brand-dark")}>${price}</span>
+          <span className={cn("text-[12px] ml-1", highlighted ? "text-white/60" : "text-gray-400")}>USD/mes</span>
+        </div>
       </div>
-      <h3 className="font-semibold text-gray-800 mb-2">{title}</h3>
-      <p className="text-sm text-gray-500">{description}</p>
-    </div>
-  );
-}
-
-function PricingItem({ text, light }: { text: string; light?: boolean }) {
-  return (
-    <li className="flex items-center gap-2">
-      <svg className={`w-4 h-4 flex-shrink-0 ${light ? "text-primary-200" : "text-primary-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-      </svg>
-      {text}
-    </li>
-  );
-}
-
-function TestimonialCard({ quote, name, role }: { quote: string; name: string; role: string }) {
-  return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-      <div className="flex gap-1 mb-3">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
+      <ul className="space-y-2 flex-1 mb-6">
+        {features.map((f) => (
+          <li key={f} className={cn("flex items-center gap-2 text-[13px]", highlighted ? "text-white/80" : "text-gray-600")}>
+            <svg className={cn("w-3.5 h-3.5 flex-shrink-0", highlighted ? "text-accent" : "text-brand-light")} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+            {f}
+          </li>
         ))}
-      </div>
-      <p className="text-sm text-gray-600 mb-4 leading-relaxed">&ldquo;{quote}&rdquo;</p>
+      </ul>
+      <Link
+        href="/auth/registro"
+        className={cn(
+          "w-full py-2.5 rounded-lg text-[13px] font-semibold text-center transition block",
+          highlighted
+            ? "bg-accent text-white hover:bg-accent-dark"
+            : "bg-brand-dark text-white hover:bg-brand-medium"
+        )}
+      >
+        Comenzar Gratis
+      </Link>
+    </div>
+  );
+}
+
+function Quote({ text, name, role }: { text: string; name: string; role: string }) {
+  return (
+    <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+      <p className="text-[13px] text-white/80 leading-relaxed mb-4">&ldquo;{text}&rdquo;</p>
       <div>
-        <p className="text-sm font-medium text-gray-800">{name}</p>
-        <p className="text-xs text-gray-400">{role}</p>
+        <p className="text-[13px] font-medium text-white">{name}</p>
+        <p className="text-[11px] text-white/40">{role}</p>
       </div>
     </div>
   );
+}
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(" ");
 }
