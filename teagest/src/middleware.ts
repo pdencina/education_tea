@@ -20,5 +20,6 @@ export const config = {
     "/equipo/:path*",
     "/reportes/:path*",
     "/configuracion/:path*",
+    "/familia/:path*",
   ],
 };
