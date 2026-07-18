@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { isSuperAdmin } from "@/lib/super-admin";
 import { TRPCError } from "@trpc/server";
+import bcrypt from "bcryptjs";
 
 // Middleware to check super admin access
 const superAdminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -73,5 +74,78 @@ export const superAdminRouter = createTRPCRouter({
         data: { isActive: input.isActive },
       });
       return { success: true };
+    }),
+
+  // Create a new center (tenant + admin user)
+  createCenter: superAdminProcedure
+    .input(z.object({
+      centerName: z.string().min(2),
+      adminName: z.string().min(2),
+      adminEmail: z.string().email(),
+      adminPassword: z.string().min(6),
+      plan: z.enum(["basic", "center", "network"]).default("basic"),
+      phone: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // Check email doesn't exist
+      const existing = await ctx.prisma.user.findUnique({ where: { email: input.adminEmail } });
+      if (existing) throw new TRPCError({ code: "CONFLICT", message: "Ese email ya está registrado" });
+
+      const passwordHash = await bcrypt.hash(input.adminPassword, 12);
+
+      const result = await ctx.prisma.$transaction(async (tx) => {
+        // Create tenant
+        const tenant = await tx.tenant.create({
+          data: { name: input.centerName, plan: input.plan, phone: input.phone },
+        });
+
+        // Create default dev areas
+        const defaultAreas = [
+          { name: "Comunicación", icon: "🗣️", order: 1 },
+          { name: "Socialización", icon: "🤝", order: 2 },
+          { name: "Autonomía", icon: "🧑‍🦯", order: 3 },
+          { name: "Académico", icon: "📚", order: 4 },
+          { name: "Sensorial", icon: "🎯", order: 5 },
+          { name: "Conducta", icon: "🧠", order: 6 },
+          { name: "Motricidad", icon: "🏃", order: 7 },
+        ];
+        for (const area of defaultAreas) {
+          await tx.devArea.create({ data: { ...area, tenantId: tenant.id } });
+        }
+
+        // Create admin user
+        const user = await tx.user.create({
+          data: {
+            tenantId: tenant.id,
+            email: input.adminEmail,
+            passwordHash,
+            name: input.adminName,
+            role: "ADMIN",
+          },
+        });
+
+        return { tenant, user };
+      });
+
+      return { tenantId: result.tenant.id, tenantName: result.tenant.name, adminEmail: result.user.email };
+    }),
+
+  // Get impersonation token (returns user info to sign in as)
+  getImpersonateInfo: superAdminProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findUnique({
+        where: { id: input.userId },
+        include: { tenant: true },
+      });
+      if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "Usuario no encontrado" });
+
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        tenantName: user.tenant.name,
+      };
     }),
 });

@@ -23,6 +23,7 @@ export default function AdminPanelPage() {
   const { data: session } = useSession();
   const router = useRouter();
   const [selectedTenant, setSelectedTenant] = useState<string>("");
+  const [showCreate, setShowCreate] = useState(false);
 
   const email = (session?.user as any)?.email;
 
@@ -38,6 +39,19 @@ export default function AdminPanelPage() {
 
   const changePlanMutation = trpc.superAdmin.changePlan.useMutation({ onSuccess: () => refetch() });
   const toggleMutation = trpc.superAdmin.toggleTenant.useMutation({ onSuccess: () => refetch() });
+  const createCenterMutation = trpc.superAdmin.createCenter.useMutation({ onSuccess: () => { setShowCreate(false); refetch(); } });
+
+  const handleImpersonate = async (userId: string) => {
+    if (!confirm("¿Entrar como este usuario? Tu sesión actual se reemplazará.")) return;
+    const res = await fetch("/api/impersonate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+    if (res.ok) {
+      window.location.href = "/dashboard";
+    }
+  };
 
   return (
     <>
@@ -70,9 +84,36 @@ export default function AdminPanelPage() {
 
         {/* Tenants table */}
         <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-          <div className="px-5 py-3 border-b border-gray-100">
+          <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
             <h3 className="text-[14px] font-semibold text-gray-800">Centros Registrados</h3>
+            <button onClick={() => setShowCreate(!showCreate)} className="px-3 py-1.5 bg-brand-dark text-white rounded-lg text-[12px] font-medium hover:bg-brand-medium transition">
+              {showCreate ? "Cancelar" : "+ Crear Centro"}
+            </button>
           </div>
+
+          {/* Create center form */}
+          {showCreate && (
+            <form onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); createCenterMutation.mutate({ centerName: f.get("centerName") as string, adminName: f.get("adminName") as string, adminEmail: f.get("adminEmail") as string, adminPassword: f.get("adminPassword") as string, plan: f.get("plan") as any, phone: (f.get("phone") as string) || undefined }); }} className="px-5 py-4 bg-gray-50 border-b border-gray-100 space-y-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <input name="centerName" required placeholder="Nombre del centro *" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-[12px] focus:outline-none focus:ring-1 focus:ring-brand-light" />
+                <input name="adminName" required placeholder="Nombre del admin *" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-[12px] focus:outline-none focus:ring-1 focus:ring-brand-light" />
+                <input name="adminEmail" type="email" required placeholder="Email del admin *" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-[12px] focus:outline-none focus:ring-1 focus:ring-brand-light" />
+                <input name="adminPassword" required placeholder="Contraseña *" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-[12px] focus:outline-none focus:ring-1 focus:ring-brand-light" />
+                <input name="phone" placeholder="Teléfono (opcional)" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-[12px] focus:outline-none focus:ring-1 focus:ring-brand-light" />
+                <select name="plan" defaultValue="basic" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-[12px] focus:outline-none focus:ring-1 focus:ring-brand-light">
+                  <option value="basic">Plan Inicio</option>
+                  <option value="center">Plan Centro</option>
+                  <option value="network">Plan Red</option>
+                </select>
+              </div>
+              <button type="submit" disabled={createCenterMutation.isPending} className="px-4 py-2 bg-brand-dark text-white rounded-lg text-[12px] font-medium disabled:opacity-50">
+                {createCenterMutation.isPending ? "Creando..." : "Crear Centro"}
+              </button>
+              {createCenterMutation.isSuccess && (
+                <span className="text-[12px] text-green-600 ml-3">Centro creado exitosamente</span>
+              )}
+            </form>
+          )}
           <div className="divide-y divide-gray-50">
             {tenants?.map((tenant) => (
               <div key={tenant.id} className="px-5 py-3 flex items-center justify-between hover:bg-gray-50/50 transition">
@@ -143,6 +184,13 @@ export default function AdminPanelPage() {
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 bg-gray-200 text-gray-600 rounded text-[10px] font-medium">{user.role}</span>
                     <span className={`w-2 h-2 rounded-full ${user.isActive ? "bg-green-500" : "bg-red-500"}`} />
+                    <button
+                      onClick={() => handleImpersonate(user.id)}
+                      className="px-2 py-1 text-[10px] font-medium text-brand-medium bg-primary-50 rounded hover:bg-primary-100 transition"
+                      title="Entrar como este usuario"
+                    >
+                      Entrar
+                    </button>
                   </div>
                 </div>
               ))}
