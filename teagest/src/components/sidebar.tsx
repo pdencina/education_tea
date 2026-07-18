@@ -17,11 +17,13 @@ import {
   FileText,
   UserPlus,
   Stethoscope,
+  CheckSquare,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Agenda", href: "/agenda", icon: CalendarClock },
+  { name: "Asistencia", href: "/asistencia", icon: CheckSquare },
   { name: "Alumnos", href: "/alumnos", icon: Users },
   { name: "Lista de Espera", href: "/lista-espera", icon: UserPlus },
   { name: "Evaluaciones", href: "/evaluaciones", icon: FileText },
