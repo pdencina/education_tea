@@ -18,7 +18,6 @@ export default function Home() {
             <div className="hidden md:flex items-center gap-6 text-[14px] font-medium text-gray-600">
               <a href="#features" className="hover:text-gray-900 transition">Soluciones</a>
               <a href="#pricing" className="hover:text-gray-900 transition">Planes</a>
-              <a href="#testimonials" className="hover:text-gray-900 transition">Testimonios</a>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -117,18 +116,6 @@ export default function Home() {
         </div>
 
         {/* Social proof logos */}
-        <div className="border-t border-gray-100 mt-0 py-8 bg-gray-50/50">
-          <div className="max-w-5xl mx-auto px-6 lg:px-10">
-            <p className="text-center text-[12px] text-gray-400 font-medium uppercase tracking-wider mb-5">Centros que confían en nosotros</p>
-            <div className="flex flex-wrap justify-center items-center gap-10 opacity-50">
-              <span className="text-[14px] font-bold text-gray-600">Centro Arcoíris</span>
-              <span className="text-[14px] font-bold text-gray-600">Instituto Puentes</span>
-              <span className="text-[14px] font-bold text-gray-600">Fundación Crecer</span>
-              <span className="text-[14px] font-bold text-gray-600">CEDEI</span>
-              <span className="text-[14px] font-bold text-gray-600">Centro Vincular</span>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Features */}
@@ -204,7 +191,7 @@ export default function Home() {
               price="129.990"
               currency="CLP"
               desc="Equipos multidisciplinarios"
-              features={["50 pacientes", "8 profesionales", "4 salas", "Todo del plan Inicio", "Evaluaciones clínicas (ADOS-2, ADI-R)", "Lista de espera", "Facturación y boletas", "Convenios FONASA / Isapre", "Agenda visual (ARASAAC)", "WhatsApp + Email", "Reportes PDF", "Indicadores avanzados"]}
+              features={["50 pacientes", "8 profesionales", "4 salas", "Todo del plan Inicio", "Evaluaciones clínicas (ADOS-2, ADI-R)", "Lista de espera", "Facturación y registro de pagos", "Agenda visual (ARASAAC)", "WhatsApp + Email", "Reportes PDF", "Indicadores avanzados"]}
               cta="Probar 14 días gratis"
               highlighted={true}
             />
@@ -216,33 +203,6 @@ export default function Home() {
               features={["Pacientes ilimitados", "Profesionales ilimitados", "Salas ilimitadas", "Todo del plan Centro", "Multi-sede (próximamente)", "API de integración", "Soporte prioritario (<4h)", "Personalización de marca", "Capacitación mensual", "Exportación masiva de datos"]}
               cta="Contactar ventas"
               highlighted={false}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="py-20 px-6 lg:px-10">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Lo que dicen nuestros usuarios</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <TestimonialCard
-              quote="Por fin puedo mostrarle a las familias el progreso real de sus hijos. Antes era todo en papel y se perdía."
-              name="Ana García"
-              role="Docente de Educación Especial"
-              initials="AG"
-            />
-            <TestimonialCard
-              quote="La agenda visual con pictogramas nos ahorró horas de trabajo. Los niños responden mejor cuando anticipan."
-              name="Carlos Méndez"
-              role="Terapeuta Ocupacional"
-              initials="CM"
-            />
-            <TestimonialCard
-              quote="Como madre, al fin entiendo qué está pasando en el centro. Los reportes me dan tranquilidad."
-              name="Laura Torres"
-              role="Madre de alumno TEA"
-              initials="LT"
             />
           </div>
         </div>
@@ -338,26 +298,4 @@ function PricingCard({ name, price, currency, desc, features, cta, highlighted }
   );
 }
 
-function TestimonialCard({ quote, name, role, initials }: { quote: string; name: string; role: string; initials: string }) {
-  return (
-    <div className="bg-gray-50 rounded-2xl p-6">
-      <div className="flex gap-0.5 mb-3">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <svg key={i} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-      </div>
-      <p className="text-[13px] text-gray-600 leading-relaxed mb-4">&ldquo;{quote}&rdquo;</p>
-      <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 bg-brand-dark rounded-full flex items-center justify-center">
-          <span className="text-[10px] font-bold text-white">{initials}</span>
-        </div>
-        <div>
-          <p className="text-[13px] font-medium text-gray-900">{name}</p>
-          <p className="text-[11px] text-gray-400">{role}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
+

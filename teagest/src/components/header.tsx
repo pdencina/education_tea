@@ -9,13 +9,13 @@ interface HeaderProps {
 
 export function Header({ title, subtitle }: HeaderProps) {
   return (
-    <header className="px-6 py-4 flex items-center justify-between sticky top-0 z-10 bg-[#f8fffe]/80 backdrop-blur-sm">
-      <div>
-        <h2 className="text-lg font-semibold text-brand-dark">{title}</h2>
-        {subtitle && <p className="text-[13px] text-gray-400 mt-0.5">{subtitle}</p>}
+    <header className="px-4 lg:px-6 py-3.5 flex items-center justify-between sticky top-0 z-10 bg-[#f8fffe]/80 backdrop-blur-sm">
+      <div className="ml-10 lg:ml-0">
+        <h2 className="text-base lg:text-lg font-semibold text-brand-dark">{title}</h2>
+        {subtitle && <p className="text-[12px] lg:text-[13px] text-gray-400 mt-0.5">{subtitle}</p>}
       </div>
       <div className="flex items-center gap-2">
-        <div className="relative">
+        <div className="relative hidden sm:block">
           <input
             type="text"
             placeholder="Buscar..."
