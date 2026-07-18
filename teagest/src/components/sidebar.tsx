@@ -57,9 +57,21 @@ export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const { data: session } = useSession();
   const tenantPlan = (session?.user as any)?.tenantPlan || "basic";
   const userRole = (session?.user as any)?.role || "TEACHER";
+  const userName = (session?.user as any)?.name || "Usuario";
+  const userEmail = (session?.user as any)?.email || "";
+  const tenantName = (session?.user as any)?.tenantName || "";
+
+  const roleLabels: Record<string, string> = {
+    ADMIN: "Admin",
+    COORDINATOR: "Coordinador",
+    TEACHER: "Docente",
+    SPECIALIST: "Especialista",
+    FAMILY: "Familia",
+  };
 
   // Filter navigation by role
   const visibleNavigation = navigation.filter((item) => isModuleVisibleForRole(userRole, item.href));
@@ -128,7 +140,7 @@ export function Sidebar() {
         )}
 
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => setShowLogoutConfirm(true)}
           className={cn(
             "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all w-full text-left",
             collapsed && "justify-center px-2",
@@ -139,6 +151,29 @@ export function Sidebar() {
           {!collapsed && "Cerrar Sesión"}
         </button>
       </div>
+
+      {/* User info */}
+      {!collapsed && (
+        <div className="px-3 py-3 border-t border-white/10">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-accent/80 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span className="text-[10px] font-bold text-white">
+                {userName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2)}
+              </span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[12px] font-medium text-white/90 truncate">{userName}</p>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-white/40 truncate">{userEmail}</span>
+              </div>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="px-1.5 py-0.5 bg-white/10 text-white/70 rounded text-[9px] font-medium">{roleLabels[userRole] || userRole}</span>
+                {tenantName && <span className="text-[9px] text-white/30 truncate">{tenantName}</span>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Collapse toggle (desktop only) */}
       <div className="hidden lg:block px-2 pb-3">
@@ -185,6 +220,34 @@ export function Sidebar() {
       )}>
         {sidebarContent}
       </aside>
+
+      {/* Logout confirmation dialog */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowLogoutConfirm(false)} />
+          <div className="relative bg-white rounded-2xl shadow-xl p-6 max-w-xs w-full mx-4 text-center">
+            <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
+              <LogOut className="w-5 h-5 text-red-500" />
+            </div>
+            <h3 className="text-[15px] font-semibold text-gray-900 mb-1">Cerrar Sesión</h3>
+            <p className="text-[13px] text-gray-500 mb-5">¿Estás seguro que deseas salir de la plataforma?</p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-[13px] font-medium hover:bg-gray-50 transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="flex-1 py-2.5 bg-red-500 text-white rounded-lg text-[13px] font-medium hover:bg-red-600 transition"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
