@@ -686,3 +686,16 @@ model Contract {
   @@index([slug])
   @@map("contracts")
 }
+
+// ==================== SUPER ADMIN NOTES ====================
+
+model TenantNote {
+  id        String   @id @default(cuid())
+  tenantId  String
+  content   String
+  createdBy String   // super admin email
+  createdAt DateTime @default(now())
+
+  @@index([tenantId])
+  @@map("tenant_notes")
+}
