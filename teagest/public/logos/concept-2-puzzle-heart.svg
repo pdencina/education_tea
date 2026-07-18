@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Concept 2: Pieza de puzzle con corazón integrado -->
+  <!-- El puzzle es símbolo universal de TEA/autismo -->
+  <!-- El corazón transmite cuidado y humanidad -->
+  <!-- Lo hace diferente: no es el puzzle colorido genérico, es elegante y minimal -->
+  
+  <!-- Pieza de puzzle simplificada -->
+  <path d="M12 14h6c0-2.2 1.8-4 4-4s4 1.8 4 4h6c1.1 0 2 .9 2 2v6c2.2 0 4 1.8 4 4s-1.8 4-4 4v6c0 1.1-.9 2-2 2h-6c0-2.2-1.8-4-4-4s-4 1.8-4 4h-6c-1.1 0-2-.9-2-2V16c0-1.1.9-2 2-2z" fill="#0f766e"/>
+  
+  <!-- Corazón en el centro -->
+  <path d="M24 21l-1.5-1.5c-1.5-1.5-4-1.5-5.5 0s-1.5 4 0 5.5L24 32l7-7c1.5-1.5 1.5-4 0-5.5s-4-1.5-5.5 0L24 21z" fill="white" opacity="0.9"/>
+</svg>

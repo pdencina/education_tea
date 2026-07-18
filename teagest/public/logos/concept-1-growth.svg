@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Concept 1: "Brote" - Una semilla que crece con forma de persona/niño -->
+  <!-- Representa: crecimiento, desarrollo, cada niño florece a su ritmo -->
+  
+  <!-- Base/tierra - semicírculo cálido -->
+  <path d="M14 34c0-5.523 4.477-10 10-10s10 4.477 10 10" fill="#0f766e" opacity="0.15"/>
+  
+  <!-- Tallo central -->
+  <path d="M24 34V18" stroke="#0f766e" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Hoja izquierda (mano abierta) -->
+  <path d="M24 24c-3-1-6-1-8 1" stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Hoja derecha (mano abierta) -->
+  <path d="M24 21c3-1 6-1 8 1" stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Cabeza/flor - círculo que representa el niño -->
+  <circle cx="24" cy="13" r="5" fill="#0f766e"/>
+  
+  <!-- Sonrisa sutil -->
+  <path d="M22 14c0.5 1 3.5 1 4 0" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+  
+  <!-- Ojos -->
+  <circle cx="22.5" cy="12" r="0.8" fill="white"/>
+  <circle cx="25.5" cy="12" r="0.8" fill="white"/>
+</svg>

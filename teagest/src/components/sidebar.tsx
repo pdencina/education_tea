@@ -8,6 +8,7 @@ import {
   Users,
   ClipboardList,
   Calendar,
+  CalendarClock,
   MessageSquare,
   Grid3X3,
   UserCircle,
@@ -17,6 +18,7 @@ import {
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Agenda", href: "/agenda", icon: CalendarClock },
   { name: "Alumnos", href: "/alumnos", icon: Users },
   { name: "Plan Educativo", href: "/pei", icon: ClipboardList },
   { name: "Sesiones", href: "/sesiones", icon: Calendar },

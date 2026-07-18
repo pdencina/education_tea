@@ -63,6 +63,7 @@ model User {
   progress     Progress[]
   messages     Message[]
   dailyReports DailyReport[]
+  therapistAppointments Appointment[] @relation("TherapistAppointments")
 
   @@index([tenantId])
   @@map("users")
@@ -109,6 +110,7 @@ model Student {
   messages     Message[]
   dailyReports DailyReport[]
   documents    Document[]
+  appointments Appointment[]
 
   @@unique([tenantId, code])
   @@index([tenantId])
@@ -368,4 +370,56 @@ model VisualSchedule {
 
   @@index([tenantId])
   @@map("visual_schedules")
+}
+
+// ==================== APPOINTMENTS / AGENDA ====================
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+model Room {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  color     String   @default("#14b8a6")
+  capacity  Int      @default(1)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  appointments Appointment[]
+
+  @@index([tenantId])
+  @@map("rooms")
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  tenantId    String
+  studentId   String
+  therapistId String
+  roomId      String?
+  date        DateTime
+  startTime   String
+  endTime     String
+  type        String            @default("INDIVIDUAL")
+  status      AppointmentStatus @default(SCHEDULED)
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  student   Student @relation(fields: [studentId], references: [id])
+  therapist User    @relation("TherapistAppointments", fields: [therapistId], references: [id])
+  room      Room?   @relation(fields: [roomId], references: [id])
+
+  @@index([tenantId])
+  @@index([therapistId, date])
+  @@index([roomId, date])
+  @@index([date])
+  @@map("appointments")
 }

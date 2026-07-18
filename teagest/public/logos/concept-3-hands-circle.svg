@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Concept 3: Manos/personas en círculo protector -->
+  <!-- Representa: equipo multidisciplinario, abrazo, comunidad -->
+  <!-- Forma circular = inclusión, protección, unidad -->
+  
+  <!-- Círculo exterior sutil -->
+  <circle cx="24" cy="24" r="18" stroke="#0f766e" stroke-width="1.5" opacity="0.2"/>
+  
+  <!-- Persona/niño central (más pequeña) -->
+  <circle cx="24" cy="20" r="3" fill="#f97316"/>
+  <path d="M24 23v5" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Persona izquierda (protectora) -->
+  <circle cx="16" cy="22" r="2.5" fill="#0f766e"/>
+  <path d="M16 24.5c0 0 2 2 4 3" stroke="#0f766e" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Persona derecha (protectora) -->
+  <circle cx="32" cy="22" r="2.5" fill="#0f766e"/>
+  <path d="M32 24.5c0 0-2 2-4 3" stroke="#0f766e" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Arco inferior que conecta (base) -->
+  <path d="M14 32c2 3 5 5 10 5s8-2 10-5" stroke="#14b8a6" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Pequeñas estrellas/destellos de progreso -->
+  <circle cx="20" cy="14" r="1" fill="#14b8a6" opacity="0.6"/>
+  <circle cx="28" cy="13" r="1" fill="#14b8a6" opacity="0.4"/>
+  <circle cx="24" cy="11" r="1.2" fill="#14b8a6" opacity="0.8"/>
+</svg>
