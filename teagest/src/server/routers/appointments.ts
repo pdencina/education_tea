@@ -151,6 +151,34 @@ export const appointmentsRouter = createTRPCRouter({
       return ctx.prisma.appointment.delete({ where: { id: input.id } });
     }),
 
+  // Get appointments with family contact for WhatsApp reminders
+  getWithContacts: protectedProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const tenantId = (ctx.session.user as any).tenantId;
+
+      const targetDate = new Date(input.date);
+      targetDate.setHours(0, 0, 0, 0);
+      const nextDay = new Date(targetDate);
+      nextDay.setDate(nextDay.getDate() + 1);
+
+      return ctx.prisma.appointment.findMany({
+        where: { tenantId, date: { gte: targetDate, lt: nextDay }, status: { in: ["SCHEDULED", "CONFIRMED"] } },
+        include: {
+          student: {
+            select: {
+              firstName: true,
+              lastName: true,
+              familyLinks: { include: { user: { select: { name: true, phone: true, email: true } } } },
+            },
+          },
+          therapist: { select: { name: true } },
+          room: { select: { name: true } },
+        },
+        orderBy: { startTime: "asc" },
+      });
+    }),
+
   // Stats for dashboard
   todayStats: protectedProcedure.query(async ({ ctx }) => {
     const tenantId = (ctx.session.user as any).tenantId;
