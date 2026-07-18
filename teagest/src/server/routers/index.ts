@@ -21,6 +21,7 @@ import { remindersRouter } from "./reminders";
 import { indicatorsRouter } from "./indicators";
 import { superAdminRouter } from "./super-admin";
 import { contractsRouter } from "./contracts";
+import { usersRouter } from "./users";
 
 export const appRouter = createTRPCRouter({
   students: studentsRouter,
@@ -45,6 +46,7 @@ export const appRouter = createTRPCRouter({
   indicators: indicatorsRouter,
   superAdmin: superAdminRouter,
   contracts: contractsRouter,
+  users: usersRouter,
 });
 
 export type AppRouter = typeof appRouter;

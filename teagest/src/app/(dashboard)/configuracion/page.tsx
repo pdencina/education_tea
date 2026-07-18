@@ -6,13 +6,15 @@ import { TabCentro } from "./tab-centro";
 import { TabPeriodos } from "./tab-periodos";
 import { TabGrupos } from "./tab-grupos";
 import { TabAreas } from "./tab-areas";
-import { Building2, CalendarDays, Users, Target } from "lucide-react";
+import { TabUsuarios } from "./tab-usuarios";
+import { Building2, CalendarDays, Users, Target, UserCog } from "lucide-react";
 
 const tabs = [
   { id: "centro", label: "Centro", Icon: Building2 },
+  { id: "usuarios", label: "Usuarios", Icon: UserCog },
   { id: "periodos", label: "Períodos", Icon: CalendarDays },
   { id: "grupos", label: "Grupos", Icon: Users },
-  { id: "areas", label: "Áreas de Desarrollo", Icon: Target },
+  { id: "areas", label: "Áreas", Icon: Target },
 ];
 
 export default function ConfiguracionPage() {
@@ -42,6 +44,7 @@ export default function ConfiguracionPage() {
 
         {/* Tab content */}
         {activeTab === "centro" && <TabCentro />}
+        {activeTab === "usuarios" && <TabUsuarios />}
         {activeTab === "periodos" && <TabPeriodos />}
         {activeTab === "grupos" && <TabGrupos />}
         {activeTab === "areas" && <TabAreas />}
