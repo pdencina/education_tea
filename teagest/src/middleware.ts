@@ -11,6 +11,7 @@ export const config = {
     "/dashboard/:path*",
     "/agenda/:path*",
     "/alumnos/:path*",
+    "/lista-espera/:path*",
     "/evaluaciones/:path*",
     "/pei/:path*",
     "/sesiones/:path*",

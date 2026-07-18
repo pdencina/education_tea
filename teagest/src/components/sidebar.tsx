@@ -15,12 +15,14 @@ import {
   BarChart3,
   Settings,
   FileText,
+  UserPlus,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Agenda", href: "/agenda", icon: CalendarClock },
   { name: "Alumnos", href: "/alumnos", icon: Users },
+  { name: "Lista de Espera", href: "/lista-espera", icon: UserPlus },
   { name: "Evaluaciones", href: "/evaluaciones", icon: FileText },
   { name: "Plan Educativo", href: "/pei", icon: ClipboardList },
   { name: "Sesiones", href: "/sesiones", icon: Calendar },

@@ -457,3 +457,47 @@ model Evaluation {
   @@index([studentId])
   @@map("evaluations")
 }
+
+// ==================== WAITING LIST ====================
+
+enum WaitingPriority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum WaitingStatus {
+  WAITING
+  CONTACTED
+  ACCEPTED
+  ENROLLED
+  DECLINED
+  EXPIRED
+}
+
+model WaitingListEntry {
+  id            String          @id @default(cuid())
+  tenantId      String
+  childName     String
+  childBirthDate DateTime?
+  childAge      Int?
+  diagnosis     String?
+  supportLevel  String?
+  parentName    String
+  parentEmail   String?
+  parentPhone   String
+  priority      WaitingPriority @default(MEDIUM)
+  status        WaitingStatus   @default(WAITING)
+  notes         String?
+  requestedServices String?     // What services they need
+  referredBy    String?         // Who referred them
+  contactedAt   DateTime?
+  enrolledAt    DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@index([tenantId])
+  @@index([tenantId, status])
+  @@index([tenantId, priority])
+  @@map("waiting_list")
+}
