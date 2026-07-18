@@ -64,6 +64,7 @@ model User {
   messages     Message[]
   dailyReports DailyReport[]
   therapistAppointments Appointment[] @relation("TherapistAppointments")
+  evaluations  Evaluation[]  @relation("EvaluatorEvaluations")
 
   @@index([tenantId])
   @@map("users")
@@ -111,6 +112,7 @@ model Student {
   dailyReports DailyReport[]
   documents    Document[]
   appointments Appointment[]
+  evaluations  Evaluation[]
 
   @@unique([tenantId, code])
   @@index([tenantId])
@@ -422,4 +424,36 @@ model Appointment {
   @@index([roomId, date])
   @@index([date])
   @@map("appointments")
+}
+
+// ==================== CLINICAL EVALUATIONS ====================
+
+enum EvaluationType {
+  ADOS_2
+  ADI_R
+  SENSORY_PROFILE
+  VINELAND
+  OTHER
+}
+
+model Evaluation {
+  id          String         @id @default(cuid())
+  tenantId    String
+  studentId   String
+  evaluatorId String
+  type        EvaluationType
+  date        DateTime
+  data        Json           // Structured evaluation data (scores, items, etc.)
+  summary     String?        // Clinical summary / interpretation
+  score       String?        // Overall score / classification
+  status      String         @default("completed") // draft, completed
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  student   Student @relation(fields: [studentId], references: [id])
+  evaluator User    @relation("EvaluatorEvaluations", fields: [evaluatorId], references: [id])
+
+  @@index([tenantId])
+  @@index([studentId])
+  @@map("evaluations")
 }
