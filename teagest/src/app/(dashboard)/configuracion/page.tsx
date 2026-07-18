@@ -6,12 +6,13 @@ import { TabCentro } from "./tab-centro";
 import { TabPeriodos } from "./tab-periodos";
 import { TabGrupos } from "./tab-grupos";
 import { TabAreas } from "./tab-areas";
+import { Building2, CalendarDays, Users, Target } from "lucide-react";
 
 const tabs = [
-  { id: "centro", label: "Centro", icon: "🏫" },
-  { id: "periodos", label: "Períodos", icon: "📅" },
-  { id: "grupos", label: "Grupos", icon: "👥" },
-  { id: "areas", label: "Áreas de Desarrollo", icon: "🎯" },
+  { id: "centro", label: "Centro", Icon: Building2 },
+  { id: "periodos", label: "Períodos", Icon: CalendarDays },
+  { id: "grupos", label: "Grupos", Icon: Users },
+  { id: "areas", label: "Áreas de Desarrollo", Icon: Target },
 ];
 
 export default function ConfiguracionPage() {
@@ -27,13 +28,13 @@ export default function ConfiguracionPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              className={`flex items-center gap-1.5 px-4 py-2 text-[13px] font-medium rounded-lg transition-all ${
                 activeTab === tab.id
-                  ? "bg-white text-primary-700 shadow-sm"
+                  ? "bg-white text-brand-dark shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              <span className="mr-1.5">{tab.icon}</span>
+              <tab.Icon className="w-3.5 h-3.5" />
               {tab.label}
             </button>
           ))}
