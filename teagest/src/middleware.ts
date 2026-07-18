@@ -19,6 +19,7 @@ export const config = {
     "/sesiones/:path*",
     "/comunicacion/:path*",
     "/facturacion/:path*",
+    "/contratos/:path*",
     "/recordatorios/:path*",
     "/agenda-visual/:path*",
     "/equipo/:path*",

@@ -116,6 +116,7 @@ model Student {
   evaluations  Evaluation[]
   clinicalNotes ClinicalNote[]
   invoices     Invoice[]
+  contracts    Contract[]
 
   @@unique([tenantId, code])
   @@index([tenantId])
@@ -648,4 +649,40 @@ model ReminderLog {
 
   @@index([tenantId, sentAt(sort: Desc)])
   @@map("reminder_logs")
+}
+
+// ==================== CONTRACTS / FIRMA DIGITAL ====================
+
+enum ContractStatus {
+  DRAFT
+  PENDING
+  SIGNED
+  CANCELLED
+}
+
+model Contract {
+  id              String         @id @default(cuid())
+  tenantId        String
+  studentId       String?
+  slug            String         @unique
+  title           String
+  content         String         // HTML/Markdown del contrato
+  plan            String?
+  modalidad       String?
+  precio          String?
+  firmanteName    String?
+  firmanteRut     String?
+  firmanteEmail   String?
+  firmaDigital    String?        // base64 PNG de la firma
+  firmadoAt       DateTime?
+  auditoriaFirma  Json?          // IP, timestamp, hash, user-agent
+  status          ContractStatus @default(PENDING)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  student Student? @relation(fields: [studentId], references: [id])
+
+  @@index([tenantId])
+  @@index([slug])
+  @@map("contracts")
 }
