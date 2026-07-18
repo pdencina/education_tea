@@ -183,33 +183,37 @@ export default function Home() {
       {/* Pricing */}
       <section id="pricing" className="py-20 px-6 lg:px-10 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-4">
             <h2 className="text-3xl font-bold text-gray-900">Planes para cada centro</h2>
-            <p className="text-gray-500 text-[15px] mt-2">14 días gratis. Sin tarjeta de crédito.</p>
+            <p className="text-gray-500 text-[15px] mt-2">14 días gratis en todos los planes. Sin tarjeta de crédito.</p>
           </div>
+          <p className="text-center text-[13px] text-brand-medium font-medium mb-10">Pago anual: 20% de descuento</p>
 
           <div className="grid md:grid-cols-3 gap-5">
             <PricingCard
-              name="Básico"
-              price="29"
-              desc="Para centros que inician"
-              features={["10 alumnos", "1 grupo", "3 profesionales", "PEI y sesiones", "Comunicación con familias"]}
-              cta="Empezar gratis"
+              name="Inicio"
+              price="49.990"
+              currency="CLP"
+              desc="Consultas y centros pequeños"
+              features={["15 pacientes", "2 profesionales", "1 sala", "Agenda + asistencia", "Ficha clínica unificada", "PEI con seguimiento", "Sesiones y evoluciones", "Comunicación con familias", "Portal apoderados", "Recordatorios por email"]}
+              cta="Probar 14 días gratis"
               highlighted={false}
             />
             <PricingCard
-              name="Profesional"
-              price="79"
-              desc="Para centros en crecimiento"
-              features={["30 alumnos", "3 grupos", "10 profesionales", "Todo del plan Básico", "Agenda Visual", "Reportes PDF"]}
-              cta="Empezar gratis"
+              name="Centro"
+              price="129.990"
+              currency="CLP"
+              desc="Equipos multidisciplinarios"
+              features={["50 pacientes", "8 profesionales", "4 salas", "Todo del plan Inicio", "Evaluaciones clínicas (ADOS-2, ADI-R)", "Lista de espera", "Facturación y boletas", "Convenios FONASA / Isapre", "Agenda visual (ARASAAC)", "WhatsApp + Email", "Reportes PDF", "Indicadores avanzados"]}
+              cta="Probar 14 días gratis"
               highlighted={true}
             />
             <PricingCard
-              name="Premium"
-              price="149"
-              desc="Para redes de centros"
-              features={["Alumnos ilimitados", "Grupos ilimitados", "Equipo ilimitado", "Todo del Profesional", "Soporte prioritario", "API de integración"]}
+              name="Red"
+              price="249.990"
+              currency="CLP"
+              desc="Centros grandes y redes"
+              features={["Pacientes ilimitados", "Profesionales ilimitados", "Salas ilimitadas", "Todo del plan Centro", "Multi-sede (próximamente)", "API de integración", "Soporte prioritario (<4h)", "Personalización de marca", "Capacitación mensual", "Exportación masiva de datos"]}
               cta="Contactar ventas"
               highlighted={false}
             />
@@ -301,20 +305,21 @@ function FeatureCard({ color, iconColor, title, desc }: { color: string; iconCol
   );
 }
 
-function PricingCard({ name, price, desc, features, cta, highlighted }: { name: string; price: string; desc: string; features: string[]; cta: string; highlighted: boolean }) {
+function PricingCard({ name, price, currency, desc, features, cta, highlighted }: { name: string; price: string; currency?: string; desc: string; features: string[]; cta: string; highlighted: boolean }) {
   return (
     <div className={`rounded-2xl p-6 flex flex-col ${highlighted ? "bg-brand-dark text-white ring-2 ring-brand-light shadow-elevated scale-[1.02]" : "bg-white border border-gray-200"}`}>
       {highlighted && <span className="text-[11px] font-semibold text-accent uppercase tracking-wider mb-2">Más popular</span>}
       <h3 className={`text-[15px] font-semibold ${highlighted ? "text-white" : "text-gray-900"}`}>{name}</h3>
       <p className={`text-[12px] mt-0.5 ${highlighted ? "text-white/50" : "text-gray-400"}`}>{desc}</p>
       <div className="mt-4 mb-5">
-        <span className={`text-3xl font-bold ${highlighted ? "text-white" : "text-gray-900"}`}>${price}</span>
-        <span className={`text-[12px] ml-1 ${highlighted ? "text-white/50" : "text-gray-400"}`}>USD/mes</span>
+        <span className={`text-[11px] ${highlighted ? "text-white/50" : "text-gray-400"}`}>$</span>
+        <span className={`text-2xl font-bold ${highlighted ? "text-white" : "text-gray-900"}`}>{price}</span>
+        <span className={`text-[11px] ml-1 ${highlighted ? "text-white/50" : "text-gray-400"}`}>{currency || "USD"}/mes</span>
       </div>
-      <ul className="space-y-2.5 flex-1 mb-6">
+      <ul className="space-y-2 flex-1 mb-6">
         {features.map((f) => (
-          <li key={f} className={`flex items-center gap-2 text-[13px] ${highlighted ? "text-white/80" : "text-gray-600"}`}>
-            <svg className={`w-4 h-4 flex-shrink-0 ${highlighted ? "text-accent" : "text-brand-light"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <li key={f} className={`flex items-start gap-2 text-[12px] ${highlighted ? "text-white/80" : "text-gray-600"}`}>
+            <svg className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${highlighted ? "text-accent" : "text-brand-light"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
             </svg>
             {f}
