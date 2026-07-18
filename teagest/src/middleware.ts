@@ -24,6 +24,7 @@ export const config = {
     "/equipo/:path*",
     "/reportes/:path*",
     "/indicadores/:path*",
+    "/upgrade/:path*",
     "/configuracion/:path*",
     "/familia/:path*",
   ],

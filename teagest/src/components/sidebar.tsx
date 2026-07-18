@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { GATED_MODULES, isModuleAllowed } from "@/lib/plans";
 import {
   LayoutDashboard,
   Users,
@@ -52,6 +53,8 @@ export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: session } = useSession();
+  const tenantPlan = (session?.user as any)?.tenantPlan || "basic";
 
   const sidebarContent = (
     <>
@@ -69,22 +72,33 @@ export function Sidebar() {
       <nav className="flex-1 px-2 mt-1 space-y-0.5 overflow-y-auto">
         {navigation.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          const isLocked = !isModuleAllowed(tenantPlan, item.href);
+          const href = isLocked ? `/upgrade?module=${encodeURIComponent(item.href)}` : item.href;
+
           return (
             <Link
               key={item.name}
-              href={item.href}
+              href={href}
               onClick={() => setMobileOpen(false)}
               title={collapsed ? item.name : undefined}
               className={cn(
                 "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all",
                 collapsed && "justify-center px-2",
-                isActive
+                isLocked && "opacity-60",
+                isActive && !isLocked
                   ? "bg-white/10 text-white font-medium"
                   : "text-white/60 hover:text-white hover:bg-white/5"
               )}
             >
-              <item.icon className={cn("w-4 h-4 flex-shrink-0", isActive ? "text-accent" : "text-white/40")} />
-              {!collapsed && item.name}
+              <item.icon className={cn("w-4 h-4 flex-shrink-0", isActive && !isLocked ? "text-accent" : "text-white/40")} />
+              {!collapsed && (
+                <span className="flex-1">{item.name}</span>
+              )}
+              {!collapsed && isLocked && (
+                <svg className="w-3 h-3 text-white/30 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              )}
             </Link>
           );
         })}
