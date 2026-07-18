@@ -27,6 +27,7 @@ export default function LoginPage() {
       setError("Credenciales inválidas. Intenta de nuevo.");
       setLoading(false);
     } else {
+      // Redirect based on role - families go to their portal
       router.push("/dashboard");
     }
   };

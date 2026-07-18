@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { GATED_MODULES, isModuleAllowed } from "@/lib/plans";
+import { isModuleVisibleForRole } from "@/lib/role-access";
 import {
   LayoutDashboard,
   Users,
@@ -55,6 +56,10 @@ export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
   const tenantPlan = (session?.user as any)?.tenantPlan || "basic";
+  const userRole = (session?.user as any)?.role || "TEACHER";
+
+  // Filter navigation by role
+  const visibleNavigation = navigation.filter((item) => isModuleVisibleForRole(userRole, item.href));
 
   const sidebarContent = (
     <>
@@ -70,7 +75,7 @@ export function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 px-2 mt-1 space-y-0.5 overflow-y-auto">
-        {navigation.map((item) => {
+        {visibleNavigation.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           const isLocked = !isModuleAllowed(tenantPlan, item.href);
           const href = isLocked ? `/upgrade?module=${encodeURIComponent(item.href)}` : item.href;
@@ -106,20 +111,22 @@ export function Sidebar() {
 
       {/* Bottom section */}
       <div className="px-2 pb-2 space-y-0.5">
-        <Link
-          href="/configuracion"
-          onClick={() => setMobileOpen(false)}
-          className={cn(
-            "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all",
-            collapsed && "justify-center px-2",
-            pathname === "/configuracion"
-              ? "bg-white/10 text-white font-medium"
-              : "text-white/60 hover:text-white hover:bg-white/5"
-          )}
-        >
-          <Settings className="w-4 h-4 text-white/40 flex-shrink-0" />
-          {!collapsed && "Configuración"}
-        </Link>
+        {isModuleVisibleForRole(userRole, "/configuracion") && (
+          <Link
+            href="/configuracion"
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all",
+              collapsed && "justify-center px-2",
+              pathname === "/configuracion"
+                ? "bg-white/10 text-white font-medium"
+                : "text-white/60 hover:text-white hover:bg-white/5"
+            )}
+          >
+            <Settings className="w-4 h-4 text-white/40 flex-shrink-0" />
+            {!collapsed && "Configuración"}
+          </Link>
+        )}
 
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
