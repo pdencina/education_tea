@@ -16,6 +16,7 @@ import {
   Settings,
   FileText,
   UserPlus,
+  Stethoscope,
 } from "lucide-react";
 
 const navigation = [
@@ -24,6 +25,7 @@ const navigation = [
   { name: "Alumnos", href: "/alumnos", icon: Users },
   { name: "Lista de Espera", href: "/lista-espera", icon: UserPlus },
   { name: "Evaluaciones", href: "/evaluaciones", icon: FileText },
+  { name: "Ficha Clínica", href: "/historial-clinico", icon: Stethoscope },
   { name: "Plan Educativo", href: "/pei", icon: ClipboardList },
   { name: "Sesiones", href: "/sesiones", icon: Calendar },
   { name: "Comunicación", href: "/comunicacion", icon: MessageSquare },

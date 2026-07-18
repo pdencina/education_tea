@@ -65,6 +65,7 @@ model User {
   dailyReports DailyReport[]
   therapistAppointments Appointment[] @relation("TherapistAppointments")
   evaluations  Evaluation[]  @relation("EvaluatorEvaluations")
+  clinicalNotes ClinicalNote[] @relation("ClinicalNoteAuthor")
 
   @@index([tenantId])
   @@map("users")
@@ -113,6 +114,7 @@ model Student {
   documents    Document[]
   appointments Appointment[]
   evaluations  Evaluation[]
+  clinicalNotes ClinicalNote[]
 
   @@unique([tenantId, code])
   @@index([tenantId])
@@ -500,4 +502,37 @@ model WaitingListEntry {
   @@index([tenantId, status])
   @@index([tenantId, priority])
   @@map("waiting_list")
+}
+
+// ==================== CLINICAL HISTORY (Ficha Clínica Unificada) ====================
+
+enum ClinicalNoteType {
+  EVOLUTION
+  OBSERVATION
+  RECOMMENDATION
+  INTERCONSULTATION
+  INITIAL_ASSESSMENT
+  DISCHARGE
+}
+
+model ClinicalNote {
+  id          String           @id @default(cuid())
+  tenantId    String
+  studentId   String
+  authorId    String
+  type        ClinicalNoteType @default(EVOLUTION)
+  title       String?
+  content     String
+  specialty   String?          // Auto-filled from author's specialty
+  isPrivate   Boolean          @default(false) // Only visible to same specialty
+  attachments String[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id])
+  author  User    @relation("ClinicalNoteAuthor", fields: [authorId], references: [id])
+
+  @@index([tenantId])
+  @@index([studentId, createdAt(sort: Desc)])
+  @@map("clinical_notes")
 }

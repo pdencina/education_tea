@@ -13,6 +13,7 @@ export const config = {
     "/alumnos/:path*",
     "/lista-espera/:path*",
     "/evaluaciones/:path*",
+    "/historial-clinico/:path*",
     "/pei/:path*",
     "/sesiones/:path*",
     "/comunicacion/:path*",
