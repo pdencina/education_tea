@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { GATED_MODULES, isModuleAllowed } from "@/lib/plans";
 import { isModuleVisibleForRole } from "@/lib/role-access";
+import { isSuperAdmin } from "@/lib/super-admin";
 import {
   LayoutDashboard,
   Users,
@@ -31,6 +32,7 @@ import {
   ChevronRight,
   Menu,
   X,
+  Shield,
 } from "lucide-react";
 import { LogoWhite } from "./logo";
 
@@ -48,6 +50,7 @@ const navigation = [
   { name: "Facturación", href: "/facturacion", icon: Receipt },
   { name: "Contratos", href: "/contratos", icon: FileSignature },
   { name: "Recordatorios", href: "/recordatorios", icon: Bell },
+  { name: "Agenda Visual", href: "/agenda-visual", icon: Grid3X3 },
   { name: "Equipo", href: "/equipo", icon: UserCircle },
   { name: "Reportes", href: "/reportes", icon: BarChart3 },
   { name: "Indicadores", href: "/indicadores", icon: TrendingUp },
@@ -88,7 +91,7 @@ export function Sidebar() {
       <nav className="flex-1 px-2 mt-1 space-y-0.5 overflow-y-auto">
         {visibleNavigation.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-          const isLocked = !isModuleAllowed(tenantPlan, item.href);
+          const isLocked = !isSuperAdmin(userEmail) && !isModuleAllowed(tenantPlan, item.href);
           const href = isLocked ? `/upgrade?module=${encodeURIComponent(item.href)}` : item.href;
 
           return (
@@ -136,6 +139,23 @@ export function Sidebar() {
           >
             <Settings className="w-4 h-4 text-white/40 flex-shrink-0" />
             {!collapsed && "Configuración"}
+          </Link>
+        )}
+
+        {isSuperAdmin(userEmail) && (
+          <Link
+            href="/admin-panel"
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all",
+              collapsed && "justify-center px-2",
+              pathname === "/admin-panel"
+                ? "bg-accent/20 text-accent font-medium"
+                : "text-accent/70 hover:text-accent hover:bg-accent/10"
+            )}
+          >
+            <Shield className="w-4 h-4 flex-shrink-0" />
+            {!collapsed && "Super Admin"}
           </Link>
         )}
 
